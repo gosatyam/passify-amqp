@@ -5,8 +5,8 @@ class MessageController {
     const { message } = req.body;
     if (!message) return res.status(400).json({ msg: "message not found" });
     const obj = new QueueService();
-    await obj.postMessage(message);
-    return res.status(200).json({ result: "Success" });
+    const result = await obj.postMessage(message);
+    return res.status(200).json({ result: "Success", result });
   }
 
   async getMessage(req, res) {

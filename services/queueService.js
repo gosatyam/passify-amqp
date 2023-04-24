@@ -14,17 +14,19 @@ class QueueService {
       ch2.sendToQueue(queue, Buffer.from(message));
       const uid = uuidv4();
       message = { type: "SEND", message };
-      // await redisCon.set(uid, JSON.stringify(message));
+      await redisCon.set(uid, JSON.stringify(message));
       logger.info(`SENDER: ${uid} : ${message}`);
+      return uid;
     } catch (err) {
       logger.error("SENDER: error in posting message", err);
+      return false;
     }
   }
 
   async getMessage(key) {
     try {
       const value = await redisCon.get(key);
-      return JSON.parse(value);
+      return value;
     } catch (err) {
       logger.error("SENDER: error in getting message", err);
       return false;
