@@ -26,6 +26,7 @@ class QueueService {
   async getMessage(key) {
     try {
       const value = await redisCon.get(key);
+      if (!value) return false;
       return value;
     } catch (err) {
       logger.error("SENDER: error in getting message", err);

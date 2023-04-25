@@ -15,7 +15,10 @@ class MessageController {
     if (!id) return res.status(400).json({ msg: "ID not found" });
     const obj = new QueueService();
     const respose = await obj.getMessage(id);
-    if (!respose) return res.status(400).json({ message: "error" });
+    if (!respose)
+      return res
+        .status(400)
+        .json({ message: "Cannot find the value for the given key" });
     return res.status(200).json(respose);
   }
 }
